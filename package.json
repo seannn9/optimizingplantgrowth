@@ -1,4 +1,5 @@
 {
+    "name": "opg",
     "private": true,
     "type": "module",
     "scripts": {
