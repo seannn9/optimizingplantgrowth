@@ -161,6 +161,11 @@
                                                    id="humiditybelow" value="{{$settings->humiditybelow}}">
                                         </div>
                                         <div class="form-group">
+                                            <label for="moisturebelow">Or Moisture Falls Below:</label>
+                                            <input type="number" class="form-control" name="moisturebelow"
+                                                   id="moisturebelow" value="{{$settings->moisturebelow}}">
+                                        </div>
+                                        <div class="form-group">
                                             <label for="sprinkleroff">Turn OFF at:</label>
                                             <input type="time" class="form-control" name="sprinkleroff"
                                                    id="sprinkleroff" value="{{$settings->sprinkleroff}}">
@@ -170,7 +175,12 @@
                                             <input type="number" class="form-control" name="humidityabove"
                                                    id="humidityabove" value="{{$settings->humidityabove}}">
                                         </div>
-
+                                        <div class="form-group">
+                                            <label for="moistureabove">Or When Moisture Goes Above:</label>
+                                            <input type="number" class="form-control" name="moistureabove"
+                                                   id="moistureabove" value="{{$settings->moistureabove}}">
+                                        </div>
+                                    
 
                                     </div>
                                     <!-- /.card-body -->
