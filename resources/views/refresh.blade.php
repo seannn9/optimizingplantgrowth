@@ -1,250 +1,202 @@
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header senseval">
+<div class="content-wrapper bg-light">
+    <!-- Header Section -->
+    <div class="content-header bg-white shadow-sm">
         <div class="container-fluid">
-            <div class="row mb-2">
+            <div class="row align-items-center py-3">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Dashboard</h1>
-                </div><!-- /.col -->
+                    <h1 class="m-0 d-flex align-items-center">
+                        <i class="fas fa-tachometer-alt mr-3 text-primary"></i>
+                        Dashboard
+                    </h1>
+                </div>
                 <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Dashboard</li>
-                    </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb bg-transparent m-0 p-0 justify-content-end">
+                            <li class="breadcrumb-item"><a href="#" class="text-primary">Home</a></li>
+                            <li class="breadcrumb-item active">Dashboard</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- /.content-header -->
+
     @php
         use App\Models\sensors;
         $sensorresult = sensors::class::latest('id')->first();
+
+        function getBoxClass($temp) {
+            if ($temp > 35) return 'bg-gradient-danger';
+            if ($temp > 25) return 'bg-gradient-warning';
+            return 'bg-gradient-success';
+        }
+
+        function getMoistureClass($moisture) {
+            if ($moisture > 75) return 'progress-bar-success';
+            if ($moisture > 50) return 'progress-bar-warning';
+            return 'progress-bar-danger';
+        }
     @endphp
 
-        <!-- Main content -->
-    <section class="content">
+    <!-- Main content -->
+    <section class="content py-4">
         <div class="container-fluid">
-            <!-- Small boxes (Stat box) -->
-            <div class="row">
-                <div class="col-2">
-                    <!-- small box -->
-                    <div class="small-box bg-info">
-                        <div class="inner">
-                            <h3>{{$sensorresult['t1']}}°c | {{$sensorresult['h1']}}%</h3>
-
-                            <p>Temp | Humidity 1 </p>
+            <!-- Temperature & Humidity Cards -->
+            <div class="row mb-4">
+                @for ($i = 1; $i <= 6; $i++)
+                    <div class="col-md-4 col-lg-2 mb-3">
+                        <div class="card {{ getBoxClass($sensorresult['t' . $i]) }} h-100 border-0 shadow-sm hover-shadow">
+                            <div class="card-body text-white">
+                                <div class="d-flex flex-column align-items-center">
+                                    <div class="sensor-icon mb-3">
+                                        <i class="fas fa-thermometer-half fa-2x"></i>
+                                    </div>
+                                    <div class="sensor-readings text-center">
+                                        <div class="temperature mb-2">
+                                            <h3 class="mb-0">{{$sensorresult['t' . $i]}}°C</h3>
+                                            <small>Temperature</small>
+                                        </div>
+                                        <div class="humidity">
+                                            <h3 class="mb-0">{{$sensorresult['h' . $i]}}%</h3>
+                                            <small>Humidity</small>
+                                        </div>
+                                    </div>
+                                    <div class="sensor-label mt-2">
+                                        <span class="badge badge-light">Sensor {{ $i }}</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="col-2">
-                    <!-- small box -->
-                    <div class="small-box bg-info">
-                        <div class="inner">
-                            <h3>{{$sensorresult['t2']}}°c | {{$sensorresult['h2']}}%</h3>
-
-                            <p>Temp | Humidity 2 </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-2">
-                    <!-- small box -->
-                    <div class="small-box bg-info">
-                        <div class="inner">
-                            <h3>{{$sensorresult['t3']}}°c | {{$sensorresult['h3']}}%</h3>
-
-                            <p>Temp | Humidity 3 </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-2">
-                    <!-- small box -->
-                    <div class="small-box bg-info">
-                        <div class="inner">
-                            <h3>{{$sensorresult['t4']}}°c | {{$sensorresult['h4']}}%</h3>
-
-                            <p>Temp | Humidity 4 </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-2">
-                    <!-- small box -->
-                    <div class="small-box bg-info">
-                        <div class="inner">
-                            <h3>{{$sensorresult['t5']}}°c | {{$sensorresult['h5']}}%</h3>
-
-                            <p>Temp | Humidity 5 </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-2">
-                    <!-- small box -->
-                    <div class="small-box bg-info">
-                        <div class="inner">
-                            <h3>{{$sensorresult['t6']}}°c | {{$sensorresult['h6']}}%</h3>
-
-                            <p>Temp | Humidity 6 </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ./col -->
+                @endfor
             </div>
-            <!-- /.row -->
-            <!-- Main row -->
+
+            <!-- Soil Moisture Section -->
             <div class="row">
-                <!-- Left col -->
-                <section class="col-lg-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Soil Moisture</h3>
+                <div class="col-12">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-header bg-white border-bottom">
+                            <h3 class="card-title d-flex align-items-center">
+                                <i class="fas fa-water text-primary mr-2"></i>
+                                Soil Moisture Levels
+                            </h3>
                         </div>
-                        <!-- /.card-header -->
                         <div class="card-body p-0">
-                            <table class="table table-striped">
-                                <thead>
-                                <tr>
-                                    <th style="width: 10px">Plant</th>
-                                    <th>Moisture %</th>
-                                    <th style="width: 40px">%</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                <tr>
-                                    <td>1.</td>
-                                    <td>
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar progress-bar-danger" style="width: {{$sensorresult['sm1']}}%"></div>
-                                        </div>
-                                    </td>
-                                    <td><span class="badge bg-success">{{$sensorresult['sm1']}}%</span></td>
-                                </tr>
-                                <tr>
-                                    <td>2.</td>
-                                    <td>
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar progress-bar-danger" style="width: {{$sensorresult['sm2']}}%"></div>
-                                        </div>
-                                    </td>
-                                    <td><span class="badge bg-success">{{$sensorresult['sm2']}}%</span></td>
-                                </tr>
-                                <tr>
-                                    <td>3.</td>
-                                    <td>
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar progress-bar-danger" style="width: {{$sensorresult['sm3']}}%"></div>
-                                        </div>
-                                    </td>
-                                    <td><span class="badge bg-success">{{$sensorresult['sm3']}}%</span></td>
-                                </tr>
-                                <tr>
-                                    <td>4.</td>
-                                    <td>
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar progress-bar-danger" style="width: {{$sensorresult['sm4']}}%"></div>
-                                        </div>
-                                    </td>
-                                    <td><span class="badge bg-success">{{$sensorresult['sm4']}}%</span></td>
-                                </tr>
-                                <tr>
-                                    <td>5.</td>
-                                    <td>
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar progress-bar-danger" style="width: {{$sensorresult['sm5']}}%"></div>
-                                        </div>
-                                    </td>
-                                    <td><span class="badge bg-success">{{$sensorresult['sm5']}}%</span></td>
-                                </tr>
-                                <tr>
-                                    <td>6.</td>
-                                    <td>
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar progress-bar-danger" style="width: {{$sensorresult['sm6']}}%"></div>
-                                        </div>
-                                    </td>
-                                    <td><span class="badge bg-success">{{$sensorresult['sm6']}}%</span></td>
-                                </tr>
-                                <tr>
-                                    <td>7.</td>
-                                    <td>
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar progress-bar-danger" style="width: {{$sensorresult['sm7']}}%"></div>
-                                        </div>
-                                    </td>
-                                    <td><span class="badge bg-success">{{$sensorresult['sm7']}}%</span></td>
-                                </tr>
-                                <tr>
-                                    <td>7.</td>
-                                    <td>
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar progress-bar-danger" style="width: {{$sensorresult['sm7']}}%"></div>
-                                        </div>
-                                    </td>
-                                    <td><span class="badge bg-success">{{$sensorresult['sm7']}}%</span></td>
-                                </tr>
-                                <tr>
-                                    <td>8.</td>
-                                    <td>
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar progress-bar-danger" style="width: {{$sensorresult['sm8']}}%"></div>
-                                        </div>
-                                    </td>
-                                    <td><span class="badge bg-success">{{$sensorresult['sm8']}}%</span></td>
-                                </tr>
-                                <tr>
-                                    <td>9.</td>
-                                    <td>
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar progress-bar-danger" style="width: {{$sensorresult['sm9']}}%"></div>
-                                        </div>
-                                    </td>
-                                    <td><span class="badge bg-success">{{$sensorresult['sm9']}}%</span></td>
-                                </tr>
-                                <tr>
-                                    <td>10.</td>
-                                    <td>
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar progress-bar-danger" style="width: {{$sensorresult['sm10']}}%"></div>
-                                        </div>
-                                    </td>
-                                    <td><span class="badge bg-success">{{$sensorresult['sm10']}}%</span></td>
-                                </tr>
-                                <tr>
-                                    <td>11.</td>
-                                    <td>
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar progress-bar-danger" style="width: {{$sensorresult['sm11']}}%"></div>
-                                        </div>
-                                    </td>
-                                    <td><span class="badge bg-success">{{$sensorresult['sm11']}}%</span></td>
-                                </tr>
-                                <tr>
-                                    <td>12.</td>
-                                    <td>
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar progress-bar-danger" style="width: {{$sensorresult['sm12']}}%"></div>
-                                        </div>
-                                    </td>
-                                    <td><span class="badge bg-success">{{$sensorresult['sm12']}}%</span></td>
-                                </tr>
-
-                                </tbody>
-                            </table>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center" style="width: 80px">Plant</th>
+                                            <th>Moisture Level</th>
+                                            <th class="text-center" style="width: 100px">Value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for ($i = 1; $i <= 12; $i++)
+                                            <tr>
+                                                <td class="text-center">
+                                                    <span class="badge badge-pill badge-light">
+                                                        Plant {{ $i }}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <div class="progress" style="height: 25px;">
+                                                        <div class="progress-bar progress-bar-striped {{ getMoistureClass($sensorresult['sm'.$i]) }}" 
+                                                             role="progressbar"
+                                                             style="width: {{$sensorresult['sm'.$i]}}%"
+                                                             aria-valuenow="{{$sensorresult['sm'.$i]}}"
+                                                             aria-valuemin="0"
+                                                             aria-valuemax="100">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span class="badge badge-pill {{ getMoistureClass($sensorresult['sm'.$i]) === 'progress-bar-success' ? 'badge-success' : (getMoistureClass($sensorresult['sm'.$i]) === 'progress-bar-warning' ? 'badge-warning' : 'badge-danger') }}">
+                                                        {{$sensorresult['sm'.$i]}}%
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        @endfor
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                        <!-- /.card-body -->
                     </div>
-                </section>
-                <!-- /.Left col -->
-                <!-- right col (We are only adding the ID to make the widgets sortable)-->
-                <section class="col-lg-5 connectedSortable">
-
-                </section>
-                <!-- right col -->
+                </div>
             </div>
-            <!-- /.row (main row) -->
-        </div><!-- /.container-fluid -->
+        </div>
     </section>
-    <!-- /.content -->
 </div>
+
+<style>
+.hover-shadow {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-shadow:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15) !important;
+}
+
+.sensor-icon {
+    background: rgba(255,255,255,0.2);
+    padding: 1rem;
+    border-radius: 50%;
+}
+
+.progress {
+    border-radius: 50px;
+    background-color: #f8f9fa;
+}
+
+.progress-bar {
+    transition: width 0.3s ease;
+}
+
+.progress-bar-success {
+    background-color: #28a745;
+}
+
+.progress-bar-warning {
+    background-color: #ffc107;
+}
+
+.progress-bar-danger {
+    background-color: #dc3545;
+}
+
+.badge {
+    padding: 0.5em 1em;
+    font-weight: 500;
+}
+
+.table th {
+    border-top: none;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #6c757d;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    color: #6c757d;
+}
+
+.card-header {
+    padding: 1rem 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .col-md-4 {
+        margin-bottom: 1rem;
+    }
+}
+</style>
+
+<!-- Make sure these are in your layout file -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
