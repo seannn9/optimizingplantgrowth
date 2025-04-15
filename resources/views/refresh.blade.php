@@ -32,10 +32,12 @@
         }
 
         function getMoistureClass($moisture) {
-            if ($moisture > 75) return 'progress-bar-success';
-            if ($moisture > 50) return 'progress-bar-warning';
+            if ($moisture < 20) return 'progress-bar-danger';
+            if ($moisture >= 20 && $moisture <= 60) return 'progress-bar-success'; 
+            if ($moisture > 60 && $moisture <= 80) return 'progress-bar-warning';
             return 'progress-bar-danger';
         }
+
     @endphp
 
     <!-- Main content -->
