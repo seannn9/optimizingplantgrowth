@@ -96,6 +96,7 @@
                                                 {{ $settings->lightstatus ? 'Turn OFF' : 'Turn ON' }}
                                             </button>
                                             <span class="badge badge-pill badge-{{ $settings->lightstatus ? 'success' : 'danger' }} px-3">
+                                                Status: 
                                                 {{ $settings->lightstatus ? 'ON' : 'OFF' }}
                                             </span>
                                         </div>
@@ -132,10 +133,10 @@
 
                                 <!-- Auto Settings -->
                                 <div class="settings-group" {{ !$settings->autosprinkler ? 'style=opacity:0.5' : '' }}>
-                                    <h6 class="text-muted mb-3">Trigger Settings</h6>
+                                    <!-- <h6 class="text-muted mb-3">Trigger Settings</h6> -->
                                     <form action="" method="POST">
                                         @csrf
-                                        <div class="row">
+                                        <!-- <div class="row">
                                             <div class="col-6">
                                                 <div class="form-group">
                                                     <label>Schedule ON</label>
@@ -152,7 +153,7 @@
                                                            {{ !$settings->autosprinkler ? 'disabled' : '' }}>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         
                                         <h6 class="text-muted mb-3 mt-4">Threshold Settings</h6>
                                         <div class="row">
@@ -213,6 +214,7 @@
                                                 {{ $settings->sprinklerstatus ? 'Turn OFF' : 'Turn ON' }}
                                             </button>
                                             <span class="badge badge-pill badge-{{ $settings->sprinklerstatus ? 'success' : 'danger' }} px-3">
+                                                Status:
                                                 {{ $settings->sprinklerstatus ? 'ON' : 'OFF' }}
                                             </span>
                                         </div>
@@ -286,6 +288,7 @@
                                                 {{ $settings->fanstatus ? 'Turn OFF' : 'Turn ON' }}
                                             </button>
                                             <span class="badge badge-pill badge-{{ $settings->fanstatus ? 'success' : 'danger' }} px-3">
+                                                Status:
                                                 {{ $settings->fanstatus ? 'ON' : 'OFF' }}
                                             </span>
                                         </div>
