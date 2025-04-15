@@ -253,15 +253,15 @@
                                     <form action="" method="POST">
                                         @csrf
                                         <div class="form-group">
-                                            <label>Turn ON Below (°C)</label>
-                                            <input type="number" step="0.1" class="form-control" name="tempbelow"
-                                                   value="{{ $settings->tempbelow }}"
+                                            <label>Turn ON when Above (°C)</label>
+                                            <input type="number" step="0.1" class="form-control" name="tempabove"
+                                                   value="{{ $settings->tempabove }}"
                                                    {{ !$settings->autofan ? 'disabled' : '' }}>
                                         </div>
                                         <div class="form-group">
-                                            <label>Turn OFF Above (°C)</label>
-                                            <input type="number" step="0.1" class="form-control" name="tempabove"
-                                                   value="{{ $settings->tempabove }}"
+                                            <label>Turn OFF when Below (°C)</label>
+                                            <input type="number" step="0.1" class="form-control" name="tempbelow"
+                                                   value="{{ $settings->tempbelow }}"
                                                    {{ !$settings->autofan ? 'disabled' : '' }}>
                                         </div>
                                         <button type="submit" class="btn btn-primary btn-block mt-3" 

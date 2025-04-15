@@ -94,10 +94,10 @@ class SensorsController extends Controller
             $tarray = array($request->t1,$request->t2,$request->t3,$request->t4,$request->t5,$request->t6);
             if ($getsettings->autofan) {
 
-                if (min($tarray) < $getsettings->tempbelow) { //1 and 3 on  0
+                if (min($tarray) > $getsettings->tempabove) { //1 and 3 on  0
                     settings::find(1)->update(['fanstatus' => 1]);
                     echo ";turnFanON;";
-                } else if (min($tarray)  > $getsettings->tempabove) { //1 and 3 on  0
+                } else if (min($tarray) < $getsettings->tempbelow) { //1 and 3 on  0
                     settings::find(1)->update(['fanstatus' => 0]);
                     echo ";turnFanOFF;";
                 }
